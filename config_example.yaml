@@ -1,0 +1,320 @@
+# Only "dataset" and "data_path" are necessary. Everything else has default values.
+
+dataset: 3dshapes
+
+# Path to the dataset. This can be overridden by command line arguments.
+data_path: /path/to/3dshapes
+
+# These will be passed to __init__() of the dataset as additional keywork arguments
+dataset_args: {}
+
+# Image size does not have to be a power of 2. Only has to be an even number.
+image_size: 64
+
+# List of labeled factors. Each entry is either a string specifying the name of the
+# factor or a dictionary containing the name and optionally the code length
+# and dropout parameters of the factor. If not specified, The code size
+# and dropout parameters will be set to dataset defaults.
+
+# If this option is not set, all factors in the dataset will be labeled except
+# the factor named "unknown" if there is one. To not have any factors labeled,
+# this option must be explicitly set to the empty list, i.e.
+# labeled_factors: []
+
+labeled_factors:
+  - wall_hue
+  - object_hue
+  - name: scale
+    size: 2
+    dropout: [0.8]
+  - name: shape
+    size: 4
+    dropout: [0.95, 0.2]
+  - name: orientation
+    size: 2
+    dropout: [0.8]
+
+# Explanation of the dropout parameters: by default we enable nested dropout
+# on the codes. Mostly this is meant to concentrate information in the early
+# dimensions so that we can increase the dimensionality of the code spaces
+# to leave room for encoding more information without being too concerned about
+# unnecessarily spreading out information in too many dimensions. It is not
+# necessary for disentanglement and can be disabled globally, in which case
+# nested dropout parameters will have no effect.
+# Nested dropout is performed for each factor individually,
+# and the dropout parameters specifies the probability of each dimension being kept,
+# using the following rules: if dropout parameters are not set, then
+# no dropout will be performed for this factor. Otherwise, it should be a list
+# of numbers [p_0, p_1, ..., p_{n-1}]. The keep probility of dimension 0
+# is always 0, the keep probility of the last dimension is p_{n-1}, the keep
+# probilities of dimension 1, 2, ..., n-1 are p_0, p_1, ..., p_{n-2},
+# and the keep probilities of the remaining dimensions are exponentially
+# interpolated between the (n-1)-th and the last dimensions.
+# e.g. if the factor size is 8 and the dropout parameters are
+# [     0.9, 0.8, 0.7,                             0.1]
+# then the keep probilities are
+# [1,   0.9, 0.8, 0.7,   0.4304, 0.2646, 0.1627,   0.1]
+
+# Some suggestions for factor size and dropout:
+# If the factor is categorical and has no more than a few dozen classes
+# then the factor size can be equal to the number of classes. The dropout of the first
+# about ln(n) dimensions can be 1 or decreasing but close to 1, where n is the number
+# of classes. The dropout of the last dimension can be 0.1 to 0.2.
+# e.g. the default dropout for the "class" factor of MNIST which has 10 classes
+# is [0.95, 0.2].
+# If the true dimensionality of a factor is known, then use that as the size
+# with no dropout or dropout very close to 1.
+# Note that this "dimensionality" is not the dimensionality of the topological
+# space of the factor itself but the smallest n such that this space can be embedded 
+# in R^n. For example, if the factor is a 2D rotation angle, its size should be 2.
+# Sometimes it can be good to set the size to one more than the true dimensionaly
+# The reason is that if the initial random weight of the network is bad it can result
+# in the samples being arranged incorrectly (e.g. making the data manifold self-crossing).
+# Having an extra dimension helps resolving this. In particular, even if the factor
+# is known to be one-dimensional, if the network fails to order all samples correctly
+# One may try using a two-dimensional code space.
+# If the factor is conceptually continuous then there is no general advice. Just make a
+# a guess for the size, erring on the larger side, and set dropout to [0.2].
+
+# Size of the unknown factor. If not set, it will be the sum of the default
+# size of all factors that are not included in the "labeled_factors" option.
+unknown_size: 3
+
+# Dropout parameters for the unknown factor. If this option and "unknown_size" are both
+# absent, the keep probability of the unknown factor will be obtained by concatenating
+# the default keep probabilities of all factors that are not included in the "labeled_factors"
+# option and sorting in descending order.
+unknown_dropout: [1, 0.5]
+
+# Structure of the convolutional part of the networks, represented by the number of
+# channels and layers of each "level". Each "level" consists of one stride-2 convlution
+# followed (or preceded in the generator) by zero or more stride-1 convlutions.
+# A padding of 1 is added on both sizes if necessary, to ensure that the output spatial
+# size is an even number, except in the last level.
+# Default setting is inferred from image size.
+# List can be empty, which makes the network an MLP.
+conv_channels: [32, 64, 128, 256]
+conv_layers: [1, 1, 1, 1]
+
+# Structure of the fully connected part of the network. Each network will have a minimum
+# of two fully connected layers: one connecting the highest convolutional features to the
+# fully connected part, the other connecting the fully connected part to the input/output
+# code. The numbers specified here are the number of additional fully connected layers
+# between these two. The value for generative networks (encoders and generators) and the
+# discriminative networks (discriminators and classifiers) are set separately.
+fc_features: 512
+enc_gen_fc_layers: 2
+dis_cla_fc_layers: 0
+
+# This will be passed to the constructor of the dataloader
+num_workers: 1
+
+# Device. Should be a PyTorch device string. This can be overridden by command line arguments.
+device: cuda:0
+
+# Training
+all_stages:
+  # Weight
+
+  # Reconstruction
+  rec_weight: 1
+
+  # Unknown code KLD
+  ucode_weight: 0.01
+
+  # Labeled code KLD
+  lcode_weight: 0.01
+
+  # Not even sure if it is mathematically justifiable to have adjustable weight
+  # between reconstruction and code KLD but I think we have good practical reasons.
+
+  # Additional KLD between the normal distribution with the same mean and variance
+  # as the batch code statistics and the standard normal distribution.
+  # A bit hackish but does have stablizing effects.
+  ubatch_weight: 0.1
+  lbatch_weight: 0.1
+
+  # Learning rate
+  lr: 1.e-4
+
+  # Learning rate for embedder
+  emb_lr: 0.001
+
+  # Batch size
+  batch_size: 32
+
+  # Set this to have a slow start because sometimes
+  # the gradient rms estimate is not very accurate in the first few iterations
+  # and produces very large step size
+  lr_ramp: 100
+
+  # Set to false to globally disable nested dropout
+  nested_dropout: true
+
+  # Randomly offset the input to the discriminators and classifiers
+  random_offset: true
+
+  # Frequency to do various things during training
+
+  # Save checkpoint
+  checkpoint_interval: 20000
+
+  # Save log
+  log_interval: 2000
+
+  # Visualize
+  sample_interval: 1000
+
+  # Print loss
+  report_interval: 100
+
+  # Plotting is explained below
+  plot_code_interval: 10000
+
+  # Embeddings are much cheaper to visualize so it can be done more frequently
+  plot_embedding_interval: 1000
+
+  # Size of the grid of images used for visualization. Preferably an even number.
+  sample_grid_size: 12
+
+  # Also compute the reconstruction loss without noise or dropout.
+  # For reporting only and not used in training.
+  test_rec: true
+
+# Options for each individual stage override those for all stages.
+
+# Stage 1
+stage1:
+  # Weight of stage 1 adversarial loss.
+  cla1_weight: 0.5
+
+  # Mode of stage 1 classifier. Can be "image", "code" or "compound".
+  # If set to "image" the input to the classifier will be generated images
+  # with mismatched unknown and labeled factors.
+  # If set to "code" the input to the classifier will be the unknown code.
+  # If set to "compound" the two classifiers will both be used and their
+  # outputs are summed before softmax.
+  cla1_mode: compound
+
+  # Structure of the code classifier if it is used. Should be weaker in
+  # "compound" mode and stronger in "code" mode
+  code_cla1_layers: 2
+  code_cla1_features: 512
+
+  # Stage 1 dversarial loss function. Can be "nlu" (Negative Log Unlikelihood),
+  # or "ll" (Log Likelihood).
+  cla1_adv_mode: nlu
+
+  # If the generator generates crazy images try to disable these
+
+  # If set to false, gradient from adversarial loss will not be accumulated
+  # in the convolution layers of the generator.
+  gen_conv_adv: false
+
+  # If set to false, gradient from adversarial loss will not be accumulated
+  # in the fully connected layers of the generator.
+  gen_fc_adv: true
+
+  # Some hacks to try if things doesn't work well
+
+  # Set this to freeze the unknown encoder for the specified number of iterations
+  # from the start.
+  enc_freeze: 0
+
+  # Set this to [t1, t2] will disable adversarial loss for the first t1 iterations
+  # then increase adversarial weight linearly from zero to the normal value between
+  # iterations t1 and t2.
+  cla1_ramp: [0, 0]
+
+  # Initialize the weight of the last layer of the unknown encoder to zero
+  zero_init: false
+
+  # training time
+  niter: 20000
+
+# Pre-train the stage 2 classifier before stage 2
+classifier:
+  niter: 20000
+
+# Stage 2
+stage2:
+  # Weight of discriminator loss
+  dis_weight: 1
+
+  # Weight of stage 2 classifier loss
+  cla2_weight: 1
+
+  # Weight of unknown code distance loss
+  match_weight: 0.1
+
+  # Draw random unknown code from a best-fitting normal distribution
+  # rather than using the unknown code of randomly selected training
+  # saples. Do not use this if the unknown factor has known semantics
+  # and is clearly not normally distributed.
+  random_ucode: false
+
+  # How the condition on the unknown factor is enforced. Can be "dis" or "mse".
+  # If set to "mse", the condition is enforced by adding the code distance loss.
+  # If set to "dis", the condition is enforced by passing the image generated
+  # by the stage 1 generator from the same unknown code and labels
+  # to the discriminator in addition to the normal input (training sample and
+  # sample generated by stage 2 generator).
+  unknown_mode: dis
+
+  # Continue to use label embedding for labeled factors in stage 2
+  # and defer the training of labeled encoders to an additional stage.
+  use_embedding: true
+
+  # Make the stage 2 classifier adversarial. Otherwise it will be frozen
+  # after being pre-trained in the classifier stage.
+  cla2_adv: true
+
+  # Include a reconstruction branch in stage 2 where images are generated
+  # using a matching set of unknown and labeled factors. This will add
+  # a reconstruction loss, and other loss terms will be averaged across
+  # the reconstruction branch and the mismatched branch.
+  has_rec_branch: true
+
+  # Just a GAN trick of mine.
+  fake_reflect: true
+
+  lr: 5.e-5
+
+  niter: 20000
+
+# Labeled encoder stage. Only happens if "use_embedding" is set to true in stage 2.
+lenc:
+  niter: 20000
+
+# Use this to track the distribution of test samples during training
+# Each item is a dictionary. If it contains both "code_factor" and
+# "color_factor", the test samples will be plotted in the code
+# space of the code factor anbd colored according to the color factor.
+# Otherwise it should contain "embedding_factor", and the class
+# embedding of that factor will be visualized.
+# use "dims" to select dimensions, and "colormap" to select a color
+# map, which should be the name of a color map in Matplotlib.
+# (See https://matplotlib.org/stable/gallery/color/colormap_reference.html)
+# Plotting is performed in any stage where the relevant encoder or
+# embedder is being trained.
+plot_config:
+
+  # Plot in the unknown code space, colored by floor hue
+  # For stage 1
+  - code_factor: unknown
+    color_factor: floor_hue
+    dims: [0, 1]
+    colormap: hsv
+
+  # Visualize wall hue embedding
+  # For stage 1, and stage 2 if use_embedding is true
+  - embedding_factor: wall_hue
+    dims: [0, 1]
+    colormap: hsv
+
+  # Plot in the scale code space, colored by shape
+  # For stage 2 if use_embedding is false, and labeled encoder stage otherwise.
+  - code_factor: scale
+    color_factor: shape
+    dims: [0, 1]
+    colormap: turbo

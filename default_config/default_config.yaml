@@ -1,0 +1,91 @@
+all_stages:
+  rec_weight: 1
+  ucode_weight: 0.001
+  ubatch_weight: 0.1
+  lcode_weight: 0.001
+  lbatch_weight: 0.1
+
+  lr: 1.e-4
+  emb_lr: 0.001
+  lr_ramp: 100
+  nested_dropout: true
+  random_offset: true
+
+  checkpoint_interval: 20000
+  log_interval: 2000
+  sample_interval: 1000
+  report_interval: 100
+  plot_code_interval: 10000
+  plot_embedding_interval: 1000
+
+  test_rec: true
+
+stage1:
+  cla1_weight: 0.5
+
+  cla1_mode: compound
+  code_cla1_layers: 2
+  code_cla1_features: 512
+
+  cla1_adv_mode: nlu
+  gen_conv_adv: false
+  gen_fc_adv: true
+  enc_freeze: 0
+  cla1_ramp: [0, 0]
+  zero_init: false
+
+  niter: 200000
+
+classifier:
+  niter: 100000
+
+stage2:
+  dis_weight: 1
+  cla2_weight: 1
+  match_weight: 0.1
+
+  random_ucode: false
+  unknown_mode: dis
+  use_embedding: true
+
+  cla2_adv: true
+  has_rec_branch: true
+  fake_reflect: true
+
+  lr: 5.e-5
+
+  niter: 200000
+
+lenc:
+  niter: 100000
+
+unknown_dropout: [0.2]
+
+conv_channels:
+  0: []
+  1: [16]
+  2: [16, 32]
+  3: [32, 64, 128]
+  4: [32, 64, 128, 256]
+  5: [32, 64, 128, 256, 512]
+  6: [32, 64, 128, 256, 384, 512]
+  7: [16, 32, 64, 128, 256, 384, 512]
+  8: [8, 16, 32, 64, 128, 256, 384, 512]
+
+fc_features:
+  0: 64
+  1: 128
+  2: 256
+  3: 512
+  4: 512
+  5: 512
+  6: 512
+  7: 768
+  8: 1024
+
+enc_gen_fc_layers: 2
+dis_cla_fc_layers: 0
+
+num_workers: 1
+
+device: cuda:0

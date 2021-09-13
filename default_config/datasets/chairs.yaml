@@ -1,0 +1,21 @@
+image_size: 128
+image_channels: 3
+
+factors:
+  - name: class
+    size: 256
+    dropout: [0.2]
+  - name: altitude
+    size: 1
+  - name: azimuth
+    size: 2
+    dropout: [0.9]
+
+stage1:
+  niter: 240000
+classifier:
+  niter: 40000
+stage2:
+  niter: 120000
+lenc:
+  niter: 80000

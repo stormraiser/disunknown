@@ -1,0 +1,22 @@
+image_size: 28
+image_channels: 1
+
+factors:
+  - name: class
+    size: 10
+    dropout: [0.95, 0.2]
+  - name: unknown
+    size: 64
+    dropout: [0.2]
+
+all_stages:
+  lcode_weight: 0.01
+
+stage1:
+  niter: 200000
+classifier:
+  niter: 40000
+stage2:
+  niter: 80000
+lenc:
+  niter: 40000

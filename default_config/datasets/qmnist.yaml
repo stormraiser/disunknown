@@ -1,0 +1,28 @@
+image_size: 28
+image_channels: 1
+
+dataset_args:
+  balanced: false
+
+factors:
+  - name: class
+    size: 10
+    dropout: [0.95, 0.1]
+  - name: writer
+    size: 64
+    dropout: [0.2]
+  - name: unknown
+    size: 32
+    dropout: [0.2]
+
+all_stages:
+  lcode_weight: 0.01
+
+stage1:
+  niter: 200000
+classifier:
+  niter: 20000
+stage2:
+  niter: 20000
+lenc:
+  niter: 40000
