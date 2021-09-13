@@ -26,13 +26,13 @@ If the dataset does not have a standard training/test split it will be split ran
     - Dataset name is `chairs`.
     - `data_path` should be the folder containing the `rendered_chairs` folder.
     - Needs to be split.
-    - You may use `--compress` to down-sample and compress the images and save them as a NumPy array of PNG-encoded `ByteArray`s. Use `--downsample_size <size>` to set image size, defaults to 128. Note that this does not dictate the training-time image size, which is configured separately. Compressing the images speeds up training only slightly if multi-process dataloader is used but makes plotting significantly faster.
+    - You may use `--compress` to down-sample and compress the images and save them as a NumPy array of PNG-encoded `bytes`. Use `--downsample_size <size>` to set image size, defaults to 128. Note that this does not dictate the training-time image size, which is configured separately. Compressing the images speeds up training only slightly if multi-process dataloader is used but makes plotting significantly faster.
     - Unrelated to this work, but the author wants to tell you that this dataset curiously contains 31 azimuth angles and two altitudes for a total of 62 images for each chair with image id `031` skipped, apparently because 32 was the intended number of azimuth angles but when they rendered the images those were generated using `np.linspace(0, 360, 32)`, ignoring the fact that 0 and 360 are the same angle, then removed the duplicating images `031` and `063` after they realized the mistake. Beware of off-by-one errors in linspace, especially if it is also circular!
 - [3D shapes](https://github.com/deepmind/3d-shapes)
     - Dataset name is `3dshapes`.
     - `data_path` should be the folder containing `3dshapes.h5`.
     - Needs to be split.
-    - You may use `--extract` to extract all images and then save them as a NumPy array of PNG-encoded `ByteArray`s. This is mainly for space-saving: the original dataset, when extracted from HDFS, takes 5.9GB of memory. The re-compressed version takes 2.2GB. Extraction and compression takes about an hour.
+    - You may use `--extract` to extract all images and then save them as a NumPy array of PNG-encoded `bytes`. This is mainly for space-saving: the original dataset, when extracted from HDFS, takes 5.9GB of memory. The re-compressed version takes 2.2GB. Extraction and compression takes about an hour.
 - The author would also like to note that he did not use the [dSprites](https://github.com/deepmind/dsprites-dataset/) dataset mainly because two of the three shapes have rotation symmetry which causes some different angles to produce the same image, i.e. the correct factor value for an image might not be unique, which is rather problematic. Furthermore, each shape has a different symmetry, so that this cannot be solved by just merging some angle values, which complicates things further.
 
 ## Training
@@ -43,7 +43,7 @@ To train, use
 $ python disentangler.py train --config_file </path/to/config/file> --save_path </path/to/save/folder>
 ```
 
-The configuration file is in YAML. See the commented example for explanations. If `config_file` is omitted, it is expected that `save_path` already exists and contains `config.yaml`. Otherwise `save_path` will be created if it does not exist, and `config_file` will be copied into it. If `save_path` already contains a previous training run that has been halted, it will by default resume from the latest checkpoint. `--start_from <stage_name> [<iteration>]` can be used to choose another restarting point. `--start_from stage1` to restart from scratch. Specifying `--data_path` or `--device` will override those settings in the configuration file.
+The configuration file is in YAML. See the [commented example](config_example.yaml) for explanations. If `config_file` is omitted, it is expected that `save_path` already exists and contains `config.yaml`. Otherwise `save_path` will be created if it does not exist, and `config_file` will be copied into it. If `save_path` already contains a previous training run that has been halted, it will by default resume from the latest checkpoint. `--start_from <stage_name> [<iteration>]` can be used to choose another restarting point. `--start_from stage1` to restart from scratch. Specifying `--data_path` or `--device` will override those settings in the configuration file.
 
 Although our goal is to deal with the cases where some factors are labeled and some factors are unknown, it feels wrong not to extrapolate to the cases where all factors are labeled or where all factors are unknown. Wo do allow these, but some parts of our method will be unnecessary and will be discarded accordingly. In particular if all factors are unknown then we just train a VAE in stage I and then a GAN having the same code space in stage II, so you can use this code for just training a GAN. We don't have the myriad of GAN tricks though.
 
