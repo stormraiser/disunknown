@@ -245,13 +245,22 @@ class Generator(nn.Module):
 
 class LabelEmbedder(nn.Module):
 
-	def __init__(self, nclass, code_size, class_freq = None):
+	def __init__(self, nclass, code_size, class_freq = None, special_init = None):
 		super().__init__()
 
 		if class_freq is None:
 			class_freq = torch.ones(nclass) / nclass
 		self.mean = nn.Parameter(torch.zeros(nclass, code_size))
 		self.lstd = nn.Parameter(torch.zeros(nclass, code_size))
+		with torch.no_grad():
+			if special_init == 'linear':
+				self.mean[:, 0].copy_(torch.linspace(-1 + 1 / nclass, 1 - 1 / nclass, nclass))
+				self.lstd[:, 0].fill_(math.log(1 / nclass))
+			elif special_init == 'circle':
+				angles = torch.linspace(0, math.pi * 2, nclass + 1)[:nclass]
+				self.mean[:, 0].copy_(angles.cos())
+				self.mean[:, 1].copy_(angles.sin())
+				self.lstd[:, :2].fill_(math.log(math.sin(math.pi / nclass)))
 		self.register_buffer('class_freq', class_freq)
 
 	def stats(self):
@@ -278,11 +287,12 @@ class LabelEmbedder(nn.Module):
 
 class MultiLabelEmbedder(nn.Module):
 
-	def __init__(self, nclass, code_size, class_freq = None):
+	def __init__(self, nclass, code_size, class_freq = None, special_init = None):
 		super().__init__()
 		self.module_list = nn.ModuleList()
 		for i in range(len(nclass)):
-			self.module_list.append(LabelEmbedder(nclass[i], code_size[i], None if class_freq is None else class_freq[i]))
+			self.module_list.append(LabelEmbedder(
+				nclass[i], code_size[i], None if class_freq is None else class_freq[i], None if special_init is None else special_init[i]))
 
 	def forward(self, input):
 		return [module(t) for module, t in zip(self.module_list, input.t())]

@@ -20,7 +20,7 @@ class Stage1AllLabeledTrainer(StageTrainer):
 		self.G.to(self.device)
 		self.add_model('G', self.G)
 
-		self.B = models.MultiLabelEmbedder(self.nclass, self.labeled_size, self.class_freq)
+		self.B = models.MultiLabelEmbedder(self.nclass, self.labeled_size, self.class_freq, self.labeled_init)
 		self.B.to(self.device)
 		self.add_model('B', self.B)
 

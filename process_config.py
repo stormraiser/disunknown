@@ -58,6 +58,7 @@ def process_config(args):
 	config['labeled_factors'] = []
 	config['labeled_size'] = []
 	config['labeled_keep_prob'] = []
+	config['labeled_init'] = []
 	if 'labeled_factors' in raw_config:
 		for item in raw_config['labeled_factors']:
 			if isinstance(item, str):
@@ -69,6 +70,7 @@ def process_config(args):
 				size = factor_defaults['size']
 				config['labeled_size'].append(size)
 				config['labeled_keep_prob'].append(_make_keep_prob(size, factor_defaults.get('dropout')))
+				config['labeled_init'].append(factor_defaults.get('init'))
 			else:
 				name = item['name']
 				config['labeled_factors'].append(name)
@@ -78,6 +80,7 @@ def process_config(args):
 				size = item.get('size', factor_defaults['size'])
 				config['labeled_size'].append(size)
 				config['labeled_keep_prob'].append(_make_keep_prob(size, item.get('dropout', factor_defaults.get('dropout'))))
+				config['labeled_init'].append(item.get('init', factor_defaults.get('init')))
 	else:
 		for factor_defaults in dataset_defaults['factors']:
 			name = factor_defaults['name']
@@ -86,6 +89,7 @@ def process_config(args):
 				size = factor_defaults['size']
 				config['labeled_size'].append(size)
 				config['labeled_keep_prob'].append(_make_keep_prob(size, factor_defaults.get('dropout')))
+				config['labeled_init'].append(factor_defaults.get('init'))
 
 	if 'unknown_size' in raw_config:
 		config['unknown_size'] = raw_config['unknown_size']
