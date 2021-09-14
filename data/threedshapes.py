@@ -14,12 +14,12 @@ class ThreeDShapes:
 		self.image_ids = labels[:, 0]
 		if os.path.exists(os.path.join(root, 'images.npy')):
 			self.images = np.load(os.path.join(root, 'images.npy'))[self.image_ids.numpy()]
-			self.mode = 'numpy'
+			self.mode = 'compressed'
 		else:
 			import h5py
 			h5data = h5py.File(os.path.join(root, '3dshapes.h5'), 'r')
 			self.images = h5data['images'][()]
-			self.mode = 'hdfs'
+			self.mode = 'raw'
 
 		if len(labeled_factors) == 0:
 			self.labels = None
@@ -55,7 +55,7 @@ class ThreeDShapes:
 		return self.image_ids.size(0)
 
 	def __getitem__(self, k):
-		if self.mode == 'numpy':
+		if self.mode == 'compressed':
 			image = Image.open(io.BytesIO(self.images[k]))
 		else:
 			image_id = self.image_ids[k]
@@ -67,7 +67,7 @@ class ThreeDShapes:
 
 	@staticmethod
 	def add_prepare_args(parser):
-		parser.add_argument('--extract', action = 'store_true',
+		parser.add_argument('--compress', action = 'store_true',
 			help = 'extract images and compress in PNG format')
 		parser.add_argument('--plot_portion', type = float, default = 0.05,
 			help = 'portion of samples for plotting')
@@ -102,7 +102,7 @@ class ThreeDShapes:
 		torch.save(test_labels, os.path.join(args.data_path, 'test.pt'))
 		torch.save(plot_labels, os.path.join(args.data_path, 'plot.pt'))
 
-		if args.extract and not os.path.exists(os.path.join(args.data_path, 'images.npy')):
+		if args.compress and not os.path.exists(os.path.join(args.data_path, 'images.npy')):
 			images = h5data['images'][()]
 			converted = []
 			for k in range(480000):

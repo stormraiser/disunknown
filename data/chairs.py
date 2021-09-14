@@ -42,7 +42,7 @@ class Chairs:
 		self.image_ids = labels[:, 0]
 		if os.path.exists(os.path.join(root, 'images.npy')):
 			self.images = np.load(os.path.join(root, 'images.npy'))[self.image_ids.numpy()]
-			self.mode = 'numpy'
+			self.mode = 'compressed'
 		else:
 			self.mode = 'files'
 
@@ -71,7 +71,7 @@ class Chairs:
 		return len(self.image_ids)
 
 	def __getitem__(self, k):
-		if self.mode == 'numpy':
+		if self.mode == 'compressed':
 			image = Image.open(io.BytesIO(self.images[k]))
 		else:
 			image_id = self.image_ids[k].item()
