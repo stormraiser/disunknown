@@ -45,14 +45,14 @@ labeled_factors:
 # and the dropout parameters specifies the probability of each dimension being kept,
 # using the following rules: if dropout parameters are not set, then
 # no dropout will be performed for this factor. Otherwise, it should be a list
-# of numbers [p_0, p_1, ..., p_{n-1}]. The keep probility of dimension 0
-# is always 0, the keep probility of the last dimension is p_{n-1}, the keep
-# probilities of dimension 1, 2, ..., n-1 are p_0, p_1, ..., p_{n-2},
-# and the keep probilities of the remaining dimensions are exponentially
+# of numbers [p_0, p_1, ..., p_{n-1}]. The keep probability of dimension 0
+# is always 1, the keep probability of the last dimension is p_{n-1}, the keep
+# probabilities of dimension 1, 2, ..., n-1 are p_0, p_1, ..., p_{n-2},
+# and the keep probabilities of the remaining dimensions are exponentially
 # interpolated between the (n-1)-th and the last dimensions.
 # e.g. if the factor size is 8 and the dropout parameters are
 # [     0.9, 0.8, 0.7,                             0.1]
-# then the keep probilities are
+# then the keep probabilities are
 # [1,   0.9, 0.8, 0.7,   0.4304, 0.2646, 0.1627,   0.1]
 
 # Some suggestions for factor size and dropout:
@@ -72,7 +72,7 @@ labeled_factors:
 # in the samples being arranged incorrectly (e.g. making the data manifold self-crossing).
 # Having an extra dimension helps resolving this. In particular, even if the factor
 # is known to be one-dimensional, if the network fails to order all samples correctly
-# One may try using a two-dimensional code space.
+# one may try using a two-dimensional code space.
 # If the factor is conceptually continuous then there is no general advice. Just make a
 # a guess for the size, erring on the larger side, and set dropout to [0.2].
 
@@ -106,7 +106,10 @@ fc_features: 512
 enc_gen_fc_layers: 2
 dis_cla_fc_layers: 0
 
-# This will be passed to the constructor of the dataloader
+# Size of the grid of images used for visualization. Preferably an even number.
+sample_grid_size: 12
+
+# This will be passed to __init__() of the dataloader
 num_workers: 1
 
 # Device. Should be a PyTorch device string. This can be overridden by command line arguments.
@@ -173,9 +176,6 @@ all_stages:
 
   # Embeddings are much cheaper to visualize so it can be done more frequently
   plot_embedding_interval: 1000
-
-  # Size of the grid of images used for visualization. Preferably an even number.
-  sample_grid_size: 12
 
   # Also compute the reconstruction loss without noise or dropout.
   # For reporting only and not used in training.
@@ -289,7 +289,7 @@ lenc:
 # Use this to track the distribution of test samples during training
 # Each item is a dictionary. If it contains both "code_factor" and
 # "color_factor", the test samples will be plotted in the code
-# space of the code factor anbd colored according to the color factor.
+# space of the code factor and colored according to the color factor.
 # Otherwise it should contain "embedding_factor", and the class
 # embedding of that factor will be visualized.
 # use "dims" to select dimensions, and "colormap" to select a color
