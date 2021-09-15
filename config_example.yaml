@@ -12,9 +12,9 @@ dataset_args: {}
 image_size: 64
 
 # List of labeled factors. Each entry is either a string specifying the name of the
-# factor or a dictionary containing the name and optionally the code length
-# and dropout parameters of the factor. If not specified, The code size
-# and dropout parameters will be set to dataset defaults.
+# factor or a dictionary containing the name and optionally the code length,
+# dropout parameters and embedder initialization of the factor. If not specified,
+# the optional settings will be set to dataset defaults.
 
 # If this option is not set, all factors in the dataset will be labeled except
 # the factor named "unknown" if there is one. To not have any factors labeled,
@@ -23,16 +23,17 @@ image_size: 64
 
 labeled_factors:
   - wall_hue
-  - object_hue
+  - name: object_hue
+    init: circle
   - name: scale
     size: 2
-    dropout: [0.8]
   - name: shape
-    size: 4
     dropout: [0.95, 0.2]
+    init: zero
   - name: orientation
     size: 2
     dropout: [0.8]
+    init: linear
 
 # Explanation of the dropout parameters: by default we enable nested dropout
 # on the codes. Mostly this is meant to concentrate information in the early
@@ -75,6 +76,10 @@ labeled_factors:
 # one may try using a two-dimensional code space.
 # If the factor is conceptually continuous then there is no general advice. Just make a
 # a guess for the size, erring on the larger side, and set dropout to [0.2].
+
+# Initialization: if the classes of a labeled factor is known to be in linear order
+# or arranged in a circle (including factors like angle or hue), "init" can be set
+# to "linear" or "circle" to initialize the embedding as such.
 
 # Size of the unknown factor. If not set, it will be the sum of the default
 # size of all factors that are not included in the "labeled_factors" option.
