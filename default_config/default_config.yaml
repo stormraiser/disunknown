@@ -31,7 +31,7 @@ stage1:
   gen_conv_adv: false
   gen_fc_adv: true
   enc_freeze: 0
-  cmb_freeze: 0
+  emb_freeze: 0
   cla1_ramp: [0, 0]
   zero_init: false
 
