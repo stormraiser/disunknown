@@ -7,9 +7,11 @@ factors:
     dropout: [0.2]
   - name: altitude
     size: 1
+    init: linear
   - name: azimuth
     size: 2
     dropout: [0.9]
+    init: circle
 
 stage1:
   niter: 240000

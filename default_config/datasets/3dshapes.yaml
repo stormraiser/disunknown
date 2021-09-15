@@ -4,19 +4,24 @@ image_channels: 3
 factors:
   - name: floor_hue
     size: 2
+    init: circle
   - name: wall_hue
     size: 2
+    init: circle
   - name: object_hue
     size: 2
+    init: circle
   - name: scale
     size: 2
     dropout: [0.8]
+    init: linear
   - name: shape
     size: 4
     dropout: [0.95, 0.2]
   - name: orientation
     size: 2
     dropout: [0.8]
+    init: linear
 
 all_stages:
   ucode_weight: 0.01

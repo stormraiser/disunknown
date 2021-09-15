@@ -135,10 +135,11 @@ class Stage1Trainer(StageTrainer):
 	def iter_func(self):
 		lr_factor = max(min((self.current_iter - self.enc_freeze) / self.lr_ramp, 1), 0)
 		self.optimizer.param_groups[0]['lr'] = self.lr * lr_factor
+		lr_factor = max(min((self.current_iter - self.emb_freeze) / self.lr_ramp, 1), 0)
+		self.optimizer.param_groups[3]['lr'] = self.emb_lr * lr_factor
 		lr_factor = min(self.current_iter / self.lr_ramp, 1)
 		self.optimizer.param_groups[1]['lr'] = self.lr * lr_factor
 		self.optimizer.param_groups[2]['lr'] = self.lr * lr_factor
-		self.optimizer.param_groups[3]['lr'] = self.emb_lr * lr_factor
 
 		if self.cla1_ramp[1] > 0:
 			h = min(max((self.current_iter - self.cla1_ramp[0]) / (self.cla1_ramp[1] - self.cla1_ramp[0]), 0), 1)

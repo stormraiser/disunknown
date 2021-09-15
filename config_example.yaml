@@ -221,6 +221,9 @@ stage1:
   # from the start.
   enc_freeze: 0
 
+  # Similar for embedders
+  emb_freeze: 0
+
   # Set this to [t1, t2] will disable adversarial loss for the first t1 iterations
   # then increase adversarial weight linearly from zero to the normal value between
   # iterations t1 and t2.

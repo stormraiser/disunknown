@@ -96,7 +96,5 @@ class DSprites:
 				png_bytes = io.BytesIO()
 				image.save(png_bytes, format = 'PNG', optimize = True)
 				converted.append(png_bytes.getvalue())
-				if (k + 1) % 1000 == 0:
-					print(k + 1)
 			converted = np.array(converted)
 			np.save(os.path.join(args.data_path, 'images.npy'), converted)

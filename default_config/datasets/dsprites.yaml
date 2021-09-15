@@ -7,25 +7,30 @@ dataset_args:
 factors:
   - name: shape
     size: 3
-    dropout: [0.95, 0.2]
+    dropout: [0.9, 0.5]
   - name: scale
     size: 2
-    dropout: [0.7]
+    dropout: [0.9]
+    init: linear
   - name: orientation
     size: 3
     dropout: [0.9, 0.5]
+    init: circle
   - name: 'x'
     size: 2
-    dropout: [0.7]
+    dropout: [0.9]
+    init: linear
   - name: 'y'
     size: 2
-    dropout: [0.7]
+    dropout: [0.9]
+    init: linear
 
 all_stages:
-  ucode_weight: 0.005
-  lcode_weight: 0.005
+  ucode_weight: 0.01
+  lcode_weight: 0.01
 
 stage1:
+  enc_freeze: 10000
   niter: 200000
 classifier:
   niter: 20000
