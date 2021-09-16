@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: "DisUnknown: Distilling Unknown Factors for Disentanglement Learning"
+title: "DisUnknown"
 email: stormraiser2012@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Project page for ICCV 2021 paper DisUnknown: Distilling Unknown Factors for Disentanglement Learning
