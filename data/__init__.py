@@ -5,6 +5,7 @@ from .threedshapes import ThreeDShapes
 from .dsprites import DSprites
 from .chairs import Chairs
 from .svhn import SVHN
+from .cifar import CIFAR10
 
 datasets = {
 	'mnist': MNIST,
@@ -14,5 +15,6 @@ datasets = {
 	'3dshapes': ThreeDShapes,
 	'chairs': Chairs,
 	'svhn': SVHN,
-	'dsprites': DSprites
+	'dsprites': DSprites,
+	'cifar10': CIFAR10
 }
