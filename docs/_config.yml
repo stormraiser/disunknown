@@ -18,10 +18,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-#title: "DisUnknown"
+title: "DisUnknown"
 #email: stormraiser2012@gmail.com
-#description: >- # this means to ignore newlines until "baseurl:"
-#  Project page for ICCV 2021 paper DisUnknown: Distilling Unknown Factors for Disentanglement Learning
+description: "Project page for ICCV 2021 paper DisUnknown: Distilling Unknown Factors for Disentanglement Learning"
 #baseurl: "" # the subpath of your site, e.g. /blog
 #url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: StormRaiser123
