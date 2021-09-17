@@ -241,7 +241,7 @@ class Stage2Trainer(StageTrainer):
 				if self.fake_reflect:
 					cla2_op_loss = sum([-(1 - torch.gather(c, 1, l.unsqueeze(1)).squeeze(1).exp()).clamp(min = 1e-8).log().mean() for c, l in zip(cla2_op_output, label.t())])
 					cla2_rec_loss = (cla2_rec_loss + cla2_op_loss) / 2
-				(cla2_real_loss + cla2_rec_loss * self.branch_factor).backward(retain_graph = True)
+				(cla2_real_loss + cla2_rec_loss * self.cla2_fake_weight * self.branch_factor).backward(retain_graph = True)
 			else:
 				cla2_rec_output = self.R(rec_t, random_offset = self.random_offset, dummy_fake = True)
 			rec_cla2_loss = sum([F.nll_loss(c, l) for c, l in zip(cla2_rec_output, label.t())])
@@ -295,7 +295,7 @@ class Stage2Trainer(StageTrainer):
 		cla2_cross_output = self.R(cross_t, random_offset = self.random_offset, dummy_fake = True)
 		if self.cla2_adv:
 			cla2_cross_loss = sum([-(1 - torch.gather(c, 1, l.unsqueeze(1)).squeeze(1).exp()).clamp(min = 1e-8).log().mean() for c, l in zip(cla2_cross_output, label_alt.t())])
-			(cla2_cross_loss * self.branch_factor).backward(retain_graph = True)
+			(cla2_cross_loss * self.cla2_fake_weight * self.branch_factor).backward(retain_graph = True)
 		cross_cla2_loss = sum([F.nll_loss(c, l) for c, l in zip(cla2_cross_output, label_alt.t())])
 		cross_cla2_grad = autograd.grad(cross_cla2_loss * self.cla2_weight * self.branch_factor, cross_t)[0]
 

@@ -50,6 +50,7 @@ stage2:
   use_embedding: true
 
   cla2_adv: true
+  cla2_fake_weight: 1
   has_rec_branch: true
   fake_reflect: true
 
