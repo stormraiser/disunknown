@@ -39,7 +39,7 @@ def process_config(args):
 
 	config['image_channels'] = dataset_defaults['image_channels']
 	config['image_size'] = raw_config.get('image_size', dataset_defaults.get('image_size'))
-	for key in ['enc_gen_fc_layers', 'dis_cla_fc_layers', 'num_workers', 'device']:
+	for key in ['enc_gen_fc_layers', 'dis_cla_fc_layers', 'num_workers', 'device', 'growing_dataset']:
 		config[key] = raw_config.get(key, dataset_defaults.get(key, defaults[key]))
 	config['device'] = args.device or config['device']
 	config['data_path'] = args.data_path or raw_config.get('data_path')

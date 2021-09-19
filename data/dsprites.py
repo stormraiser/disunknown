@@ -7,11 +7,24 @@ import torch
 
 class DSprites:
 
-	def __init__(self, root, part, labeled_factors, transform, relabel_orientation):
+	def __init__(self, root, part, labeled_factors, transform, **kwargs):
 		self.root = root
 		self.transform = transform
 		data = np.load(os.path.join(self.root, 'dsprites_ndarray_co1sh3sc6or40x32y32_64x64.npz'))
 		index = torch.load(os.path.join(root, part + '.pt'))
+
+		labels = torch.tensor(data['latents_classes']).reshape(18, 40, -1)[:, :39].reshape(-1, 6)
+		xy_labels = labels[index, 4:]
+		self.growth_start = kwargs.get('growth_start', 0)
+		self.growth_rate = kwargs.get('growth_rate', 1)
+		x_dist = torch.min((xy_labels[:, 0] - 15).abs(), (xy_labels[:, 0] - 16).abs())
+		y_dist = torch.min((xy_labels[:, 1] - 15).abs(), (xy_labels[:, 1] - 16).abs())
+		center_dist = torch.max(x_dist, y_dist)
+		dist_argsort = torch.argsort(center_dist, 0)
+		index = index[dist_argsort]
+		dist_count = center_dist.bincount(minlength = 16)
+		self.len_by_timestep = dist_count.cumsum(0)
+		self.current_timestep = 15
 
 		if os.path.exists(os.path.join(root, 'images.npy')):
 			self.images = np.load(os.path.join(root, 'images.npy')).reshape(18, 40, -1)[:, :39].reshape(-1)[index]
@@ -25,7 +38,6 @@ class DSprites:
 			self.nclass = []
 			self.class_freq = []
 		else:
-			labels = torch.tensor(data['latents_classes']).reshape(18, 40, -1)[:, :39].reshape(-1, 6)
 			factor_labels = []
 			self.nclass = []
 			for factor in labeled_factors:
@@ -37,7 +49,7 @@ class DSprites:
 					self.nclass.append(6)
 				elif factor == 'orientation':
 					ori = labels[:, 3]
-					if relabel_orientation:
+					if kwargs.get('relabel_orientation', False):
 						ori = ori.reshape(3, -1)
 						square_ori = (ori[0] * 4) % 39
 						ellipse_ori = (ori[1] * 2) % 39
@@ -54,8 +66,14 @@ class DSprites:
 			self.labels = torch.stack(factor_labels, 1)[index]
 			self.class_freq = [self.labels[:, k].bincount(minlength = self.nclass[k]).float() / self.labels.size(0) for k in range(len(labeled_factors))]
 
+	def update(self, current_iter):
+		self.current_timestep = min(max(current_iter - self.growth_start, 0) // self.growth_rate, 12) + 3
+		print('dataset updated to time step', self.current_timestep)
+		n = self.len_by_timestep[self.current_timestep]
+		self.class_freq = [self.labels[:n, k].bincount(minlength = self.nclass[k]).float() / n for k in range(len(self.nclass))]
+
 	def __len__(self):
-		return self.images.shape[0]
+		return self.len_by_timestep[self.current_timestep]
 
 	def __getitem__(self, k):
 		if self.mode == 'compressed':

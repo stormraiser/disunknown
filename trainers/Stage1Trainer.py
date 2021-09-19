@@ -100,6 +100,18 @@ class Stage1Trainer(StageTrainer):
 						self.plot_embedding()
 					break
 
+		if self.growing_dataset:
+			self.add_periodic_action(self.update_dataset, self.dataset_update_interval)
+			self.update_dataset()
+
+	def update_dataset(self):
+		self.dataset.update(self.current_iter)
+		self.B.update_class_freq(self.dataset.class_freq)
+		self.data_loader = torch.utils.data.DataLoader(self.dataset, batch_size = self.batch_size, shuffle = True, drop_last = True, num_workers = self.num_workers)
+		self.data_iter = iter(self.data_loader)
+		if hasattr(self, 'plot_dataset'):
+			self.plot_dataset.update(self.current_iter)
+
 	def next_batch(self):
 		try:
 			batch = next(self.data_iter)

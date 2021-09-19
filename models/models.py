@@ -285,6 +285,9 @@ class LabelEmbedder(nn.Module):
 		std = self.lstd.exp() / full_std
 		return self.class_freq @ ((mean.pow(2) + std.pow(2)) * 0.5 - std.log() - 0.5)
 
+	def update_class_freq(self, class_freq):
+		self.class_freq.copy_(class_freq)
+
 class MultiLabelEmbedder(nn.Module):
 
 	def __init__(self, nclass, code_size, class_freq = None, special_init = None):
@@ -305,3 +308,7 @@ class MultiLabelEmbedder(nn.Module):
 
 	def code_loss(self):
 		return [module.code_loss() for module in self.module_list]
+
+	def update_class_freq(self, class_freq):
+		for module, t in zip(self.module_list, class_freq):
+			module.update_class_freq(t)

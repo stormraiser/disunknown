@@ -1,3 +1,5 @@
+growing_dataset: false
+
 all_stages:
   rec_weight: 1
   ucode_weight: 0.001
@@ -17,6 +19,7 @@ all_stages:
   report_interval: 100
   plot_code_interval: 10000
   plot_embedding_interval: 1000
+  dataset_update_interval: 2000
 
   test_rec: true
 
