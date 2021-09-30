@@ -26,13 +26,13 @@ quantitatively and further apply it to various real-world applications
 on complicated datasets.
 
 ## **Architexture**
-<center><img src="/figures/train_stage.jpg" width="1152"></center>
+<center><img src="figures/train_stage.jpg" width="1152"></center>
 
 ## **Application 1:** Anime Style Transfer.
 Disentanglement of the artists' identity (*known factor*) and the content 
 (*unknown factor*) in anime images,
 and its application in anime style transfer.
-<center><img src="/figures/app_anime_style_transfer.jpg" width="1152" >
+<center><img src="figures/app_anime_style_transfer.jpg" width="1152" >
 <figcaption>The left column shows four input examples of two different
 artists.</figcaption></center>
 
@@ -40,7 +40,7 @@ artists.</figcaption></center>
 Disentanglement of the lighting (*known factor*) and the remaining content 
 (unknown factor) in portrait images,
 and its application for portrait relighting.
-<center><img src="/figures/app_portrait_relighting.jpg" width="1152" ></center>
+<center><img src="figures/app_portrait_relighting.jpg" width="1152" ></center>
 
 ## **Application 3:** Landmark-Based Face Reenactment
 Disentanglement of the identity (*known factor*), the pose (*known factor*) 
@@ -54,7 +54,7 @@ src="https://www.youtube.com/embed/BN6LLJpw-v0">
 Disentanglement of the identity (*known factor*), the view (*known factor*) 
 and the motion (*unknown factor*) in 2D skeletons,
 and its application in body motion retargeting.
-<center><img src="/figures/app_motion_retargeting.jpg" width="1152" ></center>
+<center><img src="figures/app_motion_retargeting.jpg" width="1152" ></center>
 
 ## **BibTeX**
 <div style="background-color:rgba(0, 0, 0, 0.0470588); text-align:center; vertical-align: middle; padding:30px 60px;">
