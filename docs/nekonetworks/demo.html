@@ -1,0 +1,122 @@
+---
+permalink: /nekonetworks/
+---
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="demo.css">
+</head>
+<body style="background-color:rgb(235, 210, 255);">
+	<div class="hbox" style="height:900px;">
+		<div class="filler"></div>
+		<div class="vbox">
+			<div class="filler"></div>
+			<div id="contentSliderGroup" class="control_group color1">
+				<div class="group_title">Non-color attributes</div>
+				<div class="hbox">
+					<button class="control full light" style="visibility:hidden;">dummy</button>
+				</div>
+				<div class="hbox">
+					<button class="control full light" onclick="randomizeContent(false);">Randomize all</button>
+					<button class="control left light" onclick="randomizeContent(true);">Randomize dimensions higher than</button>
+					<input class="control right light" type="number" min="0" max="511" value="0" required></input>
+				</div>
+				<div class="hbox">
+					<div class="vbox"></div>
+					<div class="vbox"></div>
+					<div class="vbox"></div>
+				</div>
+			</div>
+		</div>
+		<div class="vbox">
+			<div class="hbox">
+				<div class="vbox" style="width:110px;">
+					<div style="height:210px;"></div>
+					<div class="connector_l1"></div>
+					<div class="connector_l0"></div>
+					<div class="connector_l1"></div>
+					<div class="filler"></div>
+				</div>
+				<div id="displayGroup" class="control_group color4" style="align-self:center;">
+					<div class="vbox">
+						<canvas width="256px" height="256px" style="margin:2px;"></canvas>
+						<button class="control full light" style="align-self:center;" onclick="generate();" disabled>Loading...</button>
+					</div>
+				</div>
+				<div class="vbox" style="width:110px;">
+					<div style="height:210px;"></div>
+					<div class="connector_r1"></div>
+					<div class="connector_r0"></div>
+					<div class="connector_r1"></div>
+					<div class="filler"></div>
+				</div>
+			</div>
+			<div class="hbox filler">
+				<div class="filler"></div>
+				<div class="connector_c1"></div>
+				<div class="connector_c0"></div>
+				<div class="connector_c1"></div>
+				<div class="filler"></div>
+			</div>
+			<div id="colorControlGroup" class="control_group color3" style="align-self:center;">
+				<div class="group_title">Color</div>
+				<div class="hbox">
+					<button class="control full light" onclick="randomizeColor(false);">Randomize all</button>
+					<button class="control full light" onclick="randomizeColor(true);">Randomize part</button>
+					<!--<button class="control full light"><div class="hbox"><div class="check dark"></div><span>Sync eyes</span></div></button>-->
+				</div>
+				<div class="hbox"></div>
+				<div class="hbox"></div>
+				<div class="hbox"></div>
+			</div>
+		</div>
+		<div class="vbox">
+			<div style="flex-grow:1;"></div>
+			<div id="styleSliderGroup" class="control_group color2">
+				<div class="group_title">Drawing style</div>
+				<div class="hbox">
+					<button class="control left light" onclick="setStyleByArtist();">Set style by artist</button>
+					<input class="control right light" size="15" list="artistList" required></input>
+					<div class="control" style="visibility:hidden;">Artist not found!</div>
+				</div>
+				<div class="hbox">
+					<button class="control full light" onclick="randomizeStyle(false);">Randomize all</button>
+					<button class="control left light" onclick="randomizeStyle(true);">Randomize dimensions higher than</button>
+					<input class="control right light" type="number" min="0" max="255" value="0" required></input>
+				</div>
+				<div class="hbox">
+					<div class="vbox"></div>
+					<div class="vbox"></div>
+					<div class="vbox"></div>
+				</div>
+			</div>
+		</div>
+		<div class="filler"></div>
+	</div>
+	<div class="hbox">
+		<div class="filler"></div>
+		<div class="color4 text_box" style="width:700px">
+			<h1>About</h1>
+			<p>Welcome to StormRaiser's experimental anime portrait generator with independently controllable content and style. In case you are not coming from <a href="/">our project page</a>, this is also an online demo of our ICCV 2021 paper <i>DisUnknown: Distilling Unknown Factors for Disentanglement Learning</i></p>
+
+			<p>Note that this is not an exact implementation of our paper: in addition to disentangling style and content, here we additionally attempted to separate color from non-color features without color labels, which required ad hoc methods on top of the general framework proposed in our paper, while keeping the size of the network reasonable at the same time. Meeting all these requirements at once turned out to be not easy and we don't have the ideal result yet, but we still hope that you find this work interesting.</p>
+
+			<h1>How To Use</h1>
+			<p>"Randomize all" will randomize all parameters in that panel. "Randomize dimensions higher than" will randomize higher dimensions in the code while keeping lower diensions fixed. Individual dimensions can be adjusted using the sliders. Since the code is quite long they are grouped into pages. Use the page selector to switch pages. For completeness all dimensions are adjustable, but we employed Nested Dropout to concentrate important modes of variation in the earlier dimensions, so basically only about the first 6 pages in the "non-color attributes" panel and the first 2 pages in the "drawing style" panel are actually useful.</p>
+
+			<p>Drawing style can be set to that of a specific artist. Just type in their name and click the button. Our training data was obtained from <a href="https://danbooru.donmai.us/">Danbooru</a> so artist names should match their tags on Danbooru. We only used 1139 artists so you might not find what you want. Leaving it blank will give you the author's favourite illustrator.</p>
+
+			<p>In color settings, hair and eye colors are set by combining a base color and deltas beetween the base color and the color for sub-regions. The effect of the deltas and the face colors are somewhat subtle, but their range in the training data is small to begin with.</p>
+		</div>
+		<div class="filler"></div>
+	</div>
+
+	<datalist id="artistList">
+	</datalist>
+
+  	<div></div>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.9.0/dist/tf.min.js"></script>
+	<script src="demo.js"></script>
+</body>
+</html>

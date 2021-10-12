@@ -32,9 +32,11 @@ on complicated datasets.
 Disentanglement of the artists' identity (*known factor*) and the content 
 (*unknown factor*) in anime images,
 and its application in anime style transfer.
+
+**[Web demo](/nekonetworks)**
+
 <center><img src="figures/app_anime_style_transfer.jpg" width="1152" >
-<figcaption>The left column shows four input examples of two different
-artists.</figcaption></center>
+<figcaption>The left column: content input; Top row: style input.</figcaption></center>
 
 ## **Application 2:** Portrait Relighting
 Disentanglement of the lighting (*known factor*) and the remaining content 

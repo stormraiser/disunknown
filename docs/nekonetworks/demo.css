@@ -1,0 +1,376 @@
+div.control_group {
+	width: max-content;
+	position: relative;
+	border-style: solid;
+	border-width: 3px;
+	border-radius: 10px;
+	user-select: none;
+	padding: 2px;
+}
+
+div.v_group {
+	display: flex;
+	flex-direction: column;
+}
+
+div.text_box {
+	font-family: sans-serif;
+	font-size: 20px;
+	border-style: solid;
+	border-width: 3px;
+	border-radius: 10px;
+	padding: 20px;
+	margin: 20px;
+}
+
+div.slider_id {
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	font-size: 28px;
+	line-height: 60px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 8px 0 0 8px;
+}
+
+div.slider_container {
+	position: relative;
+	width: 174px;
+	height: 60px;
+	border-style: solid;
+	border-width: 1px 0;
+}
+
+div.slider_value {
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	font-size: 20px;
+	line-height: 60px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 0 8px 8px 0;
+}
+
+div.slider_tick {
+	width: 32px;
+	height: 14px;
+	text-align: center;
+	font-size: 8px;
+	line-height: 14px;
+}
+
+div.slider_tickvalue {
+	width: 32px;
+	height: 20px;
+	text-align: center;
+	font-size: 12px;
+	line-height: 20px;
+}
+
+div.slider_bar_container {
+	position: relative;
+	width: 174px;
+	height: 26px;
+}
+
+div.slider_trigger {
+	position: absolute;
+	left: 4px;
+	top: 4px;
+	width: 166px;
+	height: 18px;
+	z-index: 2;
+}
+
+div.slider_bar {
+	position: absolute;
+	left: 5px;
+	top: 11px;
+	width: 164px;
+	height: 4px;
+}
+
+div.slider_marker {
+	position: absolute;
+	top: 4px;
+	width: 6px;
+	height: 18px;
+	z-index: 1;
+}
+
+div.page_selector {
+	width: 26px;
+	height: 16px;
+	text-align: center;
+	font-size: 12px;
+	line-height: 16px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 8px;
+	margin: 2px;
+}
+
+div.color_container {
+	position: relative;
+	height: 188px;
+	width: 190px;
+	border-width: 3px;
+	border-radius: 10px;
+	border-style: solid;
+	margin: 2px;
+	background-color: rgb(249, 249, 249);
+}
+
+div.color_name {
+	position: absolute;
+	height: 26px;
+	width: 190px;
+	text-align: center;
+	font-size: 18px;
+	line-height: 26px;
+	border-width: 0 0 2px 0;
+	border-style: solid;
+	border-radius: 5px 5px 0 0;
+}
+
+div.color_wheel {
+	position: absolute;
+	height: 150px;
+	width: 150px;
+	top: 33px;
+	left: 5px;
+}
+
+div.color_bar {
+	position: absolute;
+	height: 150px;
+	width: 25px;
+	top: 33px;
+	left: 160px;
+}
+
+div.color_selector {
+	height: 18px;
+	text-align: center;
+	font-size: 14px;
+	line-height: 18px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 6px;
+	margin: 2px;
+	padding: 1px 3px;
+}
+
+div.group_title {
+	font-family: sans-serif;
+	font-size: 32px;
+	margin: 4px 8px;
+}
+
+div.hbox {
+	display: flex;
+}
+
+div.vbox {
+	display: flex;
+	flex-direction: column;
+}
+
+div.filler {
+	flex-grow: 1;
+}
+
+button.control {
+	font-family: serif;
+	height: 36px;
+	padding: 0 7px 0 7px;
+	font-size: 18px;
+	border-style: solid;
+	box-sizing: content-box;
+}
+
+button.full {
+	border-width: 2px;
+	border-radius: 10px;
+	margin: 3px 2px;
+}
+
+button.left {
+	border-width: 2px 1px 2px 2px;
+	border-radius: 10px 0 0 10px;
+	margin: 3px 0 3px 2px;
+}
+
+input.control {
+	font-family: serif;
+	height: 36px;
+	font-size: 18px;
+	padding: 0 5px;
+	border-style: solid;
+}
+
+input.right {
+	margin: 3px 2px 3px 0;
+	border-width: 2px 2px 2px 1px;
+	border-radius: 0 10px 10px 0;
+}
+
+div.check {
+	width: 12px;
+	height: 12px;
+	border-radius: 4px;
+	border-width: 2px;
+	margin: 3px 7px 3px 3px;
+	border-style: solid;
+	align-self: center;
+}
+
+div.control {
+	font-family: serif;
+	height: 44px;
+	line-height: 44px;
+	font-size: 18px;
+	padding: 0 2px;
+	text-align: center;
+}
+
+.color1,
+.color1 .light {
+	color: rgb(122, 47, 12);
+	border-color: rgb(122, 47, 12);
+	background-color: rgb(255, 251, 222);
+}
+
+.color1 .light:hover,
+.color1 input:focus {
+	background-color: rgb(255, 247, 176);
+}
+
+.color1 .dark {
+	color: rgb(255, 251, 222);
+	background-color: rgb(122, 47, 12);
+	border-color: rgb(122, 47, 12);
+}
+
+.color1 button.control:active,
+.color1 .medium {
+	background-color: rgb(255, 201, 102);
+}
+
+.color1 .light:disabled {
+	color: rgb(255, 201, 102);
+	border-color: rgb(255, 201, 102);
+	background-color: rgb(255, 251, 222);
+}
+
+.color2,
+.color2 .light {
+	color: rgb(31, 37, 123);
+	border-color: rgb(31, 37, 123);
+	background-color: rgb(229, 252, 255);
+}
+
+.color2 .light:hover,
+.color2 input:focus {
+	background-color: rgb(190, 248, 255);
+}
+
+.color2 .dark {
+	color: rgb(229, 252, 255);
+	background-color: rgb(31, 37, 123);
+	border-color: rgb(31, 37, 123);
+}
+
+.color2 button.control:active,
+.color2 .medium {
+	background-color: rgb(133, 208, 255);
+}
+.color2 .light:disabled {
+	color: rgb(133, 208, 255);
+	border-color: rgb(133, 208, 255);
+	background-color: rgb(229, 252, 255);
+}
+
+.color3,
+.color3 .light {
+	color: rgb(0, 82, 0);
+	border-color: rgb(0, 82, 0);
+	background-color: rgb(227, 255, 227);
+}
+
+.color3 .light:hover {
+	background-color: rgb(202, 253, 202);
+}
+
+.color3 .dark {
+	color: rgb(227, 255, 227);
+	background-color: rgb(0, 82, 0);
+	border-color: rgb(0, 82, 0);
+}
+
+.color3 button.control:active {
+	background-color: rgb(100, 224, 100);
+}
+.color3 .light:disabled {
+	color: rgb(100, 224, 100);
+	border-color: rgb(100, 224, 100);
+	background-color: rgb(227, 255, 227);
+}
+
+.color4,
+.color4 .light {
+	color: rgb(93, 31, 123);
+	border-color: rgb(93, 31, 123);
+	background-color: rgb(252, 246, 255);
+}
+
+.color4 .light:hover {
+	background-color: rgb(247, 231, 255);
+}
+
+.color4 button.control:active {
+	background-color: rgb(224, 160, 255);
+}
+.color4 .light:disabled {
+	color: rgb(224, 160, 255);
+	border-color: rgb(224, 160, 255);
+	background-color: rgb(252, 246, 255);
+}
+
+.connector_l1 {
+	height: 3px;
+	background: linear-gradient(to left, rgb(93, 31, 123), rgb(122, 47, 12));
+}
+
+.connector_l0 {
+	height: 6px;
+	background: linear-gradient(to left, rgb(252, 246, 255), rgb(255, 251, 222));
+	margin: 0 -3px;
+	z-index: 2;
+}
+
+.connector_r1 {
+	height: 3px;
+	background: linear-gradient(to right, rgb(93, 31, 123), rgb(31, 37, 123));
+}
+
+.connector_r0 {
+	height: 6px;
+	background: linear-gradient(to right, rgb(252, 246, 255), rgb(229, 252, 255));
+	margin: 0 -3px;
+	z-index: 2;
+}
+
+.connector_c1 {
+	width: 3px;
+	background: linear-gradient(rgb(93, 31, 123), rgb(0, 82, 0));
+}
+
+.connector_c0 {
+	width: 6px;
+	background: linear-gradient(rgb(252, 246, 255), rgb(227, 255, 227));
+	margin: -3px 0;
+	z-index: 2;
+}

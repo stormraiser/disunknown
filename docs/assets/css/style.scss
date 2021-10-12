@@ -5,7 +5,8 @@
 $header-heading-color: #fff !default;
 $header-bg-color: #96b5b5 !default;
 $header-bg-color-secondary: #606060 !default;
-$body-link-color: #fff !default;
+$header-link-color: #fff !default;
+$body-link-color: #0d7eef !default;
 $body-link-color-dark: #1e6bb8 !default;
 
 @import "{{ site.theme }}";
@@ -26,6 +27,14 @@ $body-link-color-dark: #1e6bb8 !default;
 
   @include small {
     padding: 2rem 1rem;
+  }
+
+  a:link {
+  color: $header-link-color;
+  }
+
+  a:visited {
+     color: $header-link-color;
   }
 }
 
