@@ -495,6 +495,10 @@ function getStyle() {
 	return tf.tensor(styleControl.value).expandDims(0);
 }
 
+function clearArtistInput() {
+	styleControl.sliderGroup.children[1].children[1].value = ''
+}
+
 function setStyleByArtist() {
 	let artistName = styleControl.sliderGroup.children[1].children[1].value
 	if (artistName == "") {
