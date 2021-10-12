@@ -14,9 +14,11 @@ permalink: /nekonetworks/
 			<div class="filler"></div>
 			<div id="contentSliderGroup" class="control_group color1">
 				<div class="group_title">Non-color attributes</div>
+				<!--
 				<div class="hbox">
 					<button class="control full light" style="visibility:hidden;">dummy</button>
 				</div>
+				-->
 				<div class="hbox">
 					<button class="control full light" onclick="randomizeContent(false);">Randomize all</button>
 					<button class="control left light" onclick="randomizeContent(true);">Randomize dimensions higher than</button>
@@ -80,11 +82,13 @@ permalink: /nekonetworks/
 					<input class="control right light" size="15" list="artistList" required></input>
 					<div class="control" style="visibility:hidden;">Artist not found!</div>
 				</div>
+				<!--
 				<div class="hbox">
 					<button class="control full light" onclick="randomizeStyle(false);">Randomize all</button>
 					<button class="control left light" onclick="randomizeStyle(true);">Randomize dimensions higher than</button>
 					<input class="control right light" type="number" min="0" max="255" value="0" required></input>
 				</div>
+				-->
 				<div class="hbox">
 					<div class="vbox"></div>
 					<div class="vbox"></div>
@@ -103,9 +107,9 @@ permalink: /nekonetworks/
 			<p>Note that this is not an exact implementation of our paper: in addition to disentangling style and content, here we additionally attempted to separate color from non-color features without color labels, which required ad hoc methods on top of the general framework proposed in our paper, while keeping the size of the network reasonable at the same time. Meeting all these requirements at once turned out to be not easy and we don't have the ideal result yet, but we still hope that you find this work interesting.</p>
 
 			<h1>How To Use</h1>
-			<p>"Randomize all" will randomize all parameters in that panel. "Randomize dimensions higher than" will randomize higher dimensions in the code while keeping lower diensions fixed. Individual dimensions can be adjusted using the sliders. Since the code is quite long they are grouped into pages. Use the page selector to switch pages. For completeness all dimensions are adjustable, but we employed Nested Dropout to concentrate important modes of variation in the earlier dimensions, so basically only about the first 6 pages in the "non-color attributes" panel and the first 2 pages in the "drawing style" panel are actually useful.</p>
+			<p>"Randomize all" will randomize all dimensions. "Randomize dimensions higher than" will randomize higher dimensions in the code while keeping lower diensions fixed. Individual dimensions can be adjusted using the sliders. Since the code is quite long they are grouped into pages. Use the page selector to switch pages. For completeness all dimensions are adjustable, but we employed Nested Dropout to concentrate important modes of variation in the earlier dimensions, so basically only about the first 6 pages in the "non-color attributes" panel and the first 2 pages in the "drawing style" panel are actually useful.</p>
 
-			<p>Drawing style can be set to that of a specific artist. Just type in their name and click the button. Our training data was obtained from <a href="https://danbooru.donmai.us/">Danbooru</a> so artist names should match their tags on Danbooru. We only used 1139 artists so you might not find what you want. Leaving it blank will give you the author's favourite illustrator.</p>
+			<p>Drawing style can be set to that of one of a few specific artist. Just type in their name and click the button. Our training data was obtained from <a href="https://danbooru.donmai.us/">Danbooru</a> so artist names should match their tags on Danbooru.</p>
 
 			<p>In color settings, hair and eye colors are set by combining a base color and deltas beetween the base color and the color for sub-regions. The effect of the deltas and the face colors are somewhat subtle, but their range in the training data is small to begin with.</p>
 		</div>

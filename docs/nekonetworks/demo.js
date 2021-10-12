@@ -420,7 +420,8 @@ function checkAllLoaded() {
 	displayGroup.children[0].children[1].disabled = false;
 	displayGroup.children[0].children[1].innerHTML = "Generate";
 	randomizeContent(0);
-	randomizeStyle(0);
+	//randomizeStyle(0);
+	randomSelectStyle();
 	randomizeColor(0);
 }
 
@@ -430,7 +431,7 @@ function randomizeContent(limited) {
 	}
 	let startDim;
 	if (limited) {
-		startDim = Math.min(Math.max(contentControl.sliderGroup.children[2].children[2].value, 0), 511) + 1;
+		startDim = Math.min(Math.max(contentControl.sliderGroup.children[1].children[2].value, 0), 511) + 1;
 		if (startDim >= 511) {
 			return;
 		}
@@ -442,8 +443,9 @@ function randomizeContent(limited) {
 	let code = tf.randomNormal([1, 64]).matMul(stats.con_basis).squeeze(0).add(stats.con_mean).clipByValue(-2.5, 2.5);
 	let value = code.arraySync();
 	for (let i = startDim; i < 512; i++) {
-		contentControl.value[i] = value[i];
-		contentControl.sliderPos[i] = Math.round((value[i] + 2.5) / 5 * 160) + 4;
+		v = value[i] * 0.5
+		contentControl.value[i] = v;
+		contentControl.sliderPos[i] = Math.round((v + 2.5) / 5 * 160) + 4;
 	}
 	changePage(contentControl, contentControl.currentPage);
 }
@@ -452,6 +454,7 @@ function getContent() {
 	return tf.tensor(contentControl.value).expandDims(0);
 }
 
+/*
 function randomizeStyle(limited) {
 	if (!allLoaded) {
 		return;
@@ -472,6 +475,18 @@ function randomizeStyle(limited) {
 	for (let i = startDim; i < 256; i++) {
 		styleControl.value[i] = value[i];
 		styleControl.sliderPos[i] = Math.round((value[i] + 2.5) / 5 * 160) + 4;
+	}
+	changePage(styleControl, styleControl.currentPage);
+}
+*/
+
+function randomSelectStyle() {
+	let artistIndex = Math.floor(Math.random() * stats.artist_names.length);
+	let artistStyle = stats.artist_sty[artistIndex]
+	for (let i = 0; i < 256; i++) {
+		v = Math.min(Math.max(artistStyle[i], -2.5), 2.5)
+		styleControl.value[i] = v;
+		styleControl.sliderPos[i] = Math.round((v + 2.5) / 5 * 160) + 4;
 	}
 	changePage(styleControl, styleControl.currentPage);
 }
@@ -724,7 +739,7 @@ for (controlObj of [contentControl, styleControl]) {
 	for (let i = 0; i < 20; i++) {
 		slider = createSlider(controlObj, i);
 		c = Math.floor(i / 10);
-		controlObj.sliderGroup.children[3].children[1 + c].append(slider);
+		controlObj.sliderGroup.children[2].children[1 + c].append(slider);
 		controlObj.sliders.push(slider);
 	}
 
@@ -736,7 +751,7 @@ for (controlObj of [contentControl, styleControl]) {
 	for (let i = 0; i < controlObj.nPage; i++) {
 		let selector = createSelector(controlObj, i, (i * 20).toString());
 		controlObj.pageSelectors.push(selector);
-		controlObj.sliderGroup.children[3].children[0].append(selector);
+		controlObj.sliderGroup.children[2].children[0].append(selector);
 	}
 
 	changePage(controlObj, 0);
