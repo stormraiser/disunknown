@@ -20,6 +20,7 @@
 title: "DisUnknown"
 description: "The project page for \"DisUnknown: Distilling Unknown Factors for Disentanglement Learning\""
 
+baseurl: /disunknown
 title1: "DisUnknown:"
 title2: "Distilling Unknown Factors for Disentanglement Learning"
 title3: "International Conference on Computer Vision (ICCV) 2021"

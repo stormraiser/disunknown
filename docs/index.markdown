@@ -33,7 +33,7 @@ Disentanglement of the artists' identity (*known factor*) and the content
 (*unknown factor*) in anime images,
 and its application in anime style transfer.
 
-**[Web demo](/nekonetworks)**
+**[Web demo](/disunknown/nekonetworks/)**
 
 <center><img src="figures/app_anime_style_transfer.jpg" width="1152" >
 <figcaption>The left column: content input; Top row: style input.</figcaption></center>
