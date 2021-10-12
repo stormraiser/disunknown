@@ -443,7 +443,7 @@ function randomizeContent(limited) {
 	let code = tf.randomNormal([1, 64]).matMul(stats.con_basis).squeeze(0).add(stats.con_mean).clipByValue(-2.5, 2.5);
 	let value = code.arraySync();
 	for (let i = startDim; i < 512; i++) {
-		v = value[i] * 0.5
+		v = value[i]
 		contentControl.value[i] = v;
 		contentControl.sliderPos[i] = Math.round((v + 2.5) / 5 * 160) + 4;
 	}
