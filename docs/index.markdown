@@ -26,14 +26,16 @@ quantitatively and further apply it to various real-world applications
 on complicated datasets.
 
 ## **Presentation Video**
-<iframe width="1152" height="648" src="https://www.youtube.com/embed/jEza9IKsANE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin:auto;display:block;"></iframe>
+<div style="margin:auto;max-width:1152px;aspect-ratio:16/9;">
+<iframe src="https://www.youtube.com/embed/jEza9IKsANE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>
+</div>
 
 ## **Architecture**
 <center><img src="figures/train_stage.jpg" width="1152"></center>
 
 ## **Application 1:** Anime Style Transfer.
-Disentanglement of the artists' identity (*labeled*) and the content 
-(*unknown*) in anime images,
+Disentanglement of the artists' identity *(labeled)* and the content 
+*(unknown)* in anime images,
 and its application in anime style transfer.
 
 **[Web demo](/disunknown/nekonetworks/)**
@@ -42,22 +44,28 @@ and its application in anime style transfer.
 <figcaption>The left column: content input; Top row: style input.</figcaption></center>
 
 ## **Application 2:** Portrait Relighting
-Disentanglement of the lighting (*labeled*) and the remaining content 
-(*unknown*) in portrait images,
+Disentanglement of the lighting *(labeled)* and the remaining content 
+*(unknown)* in portrait images,
 and its application for portrait relighting.
-<iframe width="1152" height="648" src="https://www.youtube.com/embed/UOS5b1x9kzI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin:auto;display:block;"></iframe>
+<div style="margin:auto;max-width:1152px;aspect-ratio:16/9;">
+<iframe src="https://www.youtube.com/embed/UOS5b1x9kzI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>
+</div>
 
 ## **Application 3:** Landmark-Based Face Reenactment
-Disentanglement of the identity (*labeled*), the pose (*labeled*) 
-and the expression (*unknown*) in 2D face landmarks,
+Disentanglement of the identity *(labeled)*, the pose *(labeled)* 
+and the expression *(unknown)* in 2D face landmarks,
 and its application in face reenactment.
-<iframe width="1152" height="648" src="https://www.youtube.com/embed/BN6LLJpw-v0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin:auto;display:block;"></iframe>
+<div style="margin:auto;max-width:1152px;aspect-ratio:16/9;">
+<iframe src="https://www.youtube.com/embed/BN6LLJpw-v0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>
+</div>
 
 ## **Application 4:** Skeleton-Based Body Motion Retargeting
-Disentanglement of the identity (*labeled*), the view (*labeled*) 
-and the motion (*unknown*) in 2D skeletons,
+Disentanglement of the identity *(labeled)*, the view *(labeled)* 
+and the motion *(unknown)* in 2D skeletons,
 and its application in body motion retargeting.
-<iframe width="1152" height="648" src="https://www.youtube.com/embed/FIUzmOE2_2w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin:auto;display:block;"></iframe>
+<div style="margin:auto;max-width:1152px;aspect-ratio:16/9;">
+<iframe src="https://www.youtube.com/embed/FIUzmOE2_2w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>
+</div>
 
 ## **BibTeX**
 ```
