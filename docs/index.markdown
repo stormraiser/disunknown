@@ -66,7 +66,7 @@ and the motion (*unknown factor*) in 2D skeletons,
 and its application in body motion retargeting.
 <center><img src="figures/app_motion_retargeting.jpg" width="1152" ></center>
 <iframe width="1152" height="648" style="margin: auto; display: block;"
-src="https://www.youtube.com/embed/I4W6Fm8M1dg">
+src="https://www.youtube.com/embed/FIUzmOE2_2w">
 </iframe>
 
 ## **BibTeX**
