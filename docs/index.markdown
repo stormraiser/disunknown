@@ -25,7 +25,12 @@ we evaluate it on multiple benchmark datasets qualitatively and
 quantitatively and further apply it to various real-world applications
 on complicated datasets.
 
-## **Architexture**
+## **Presentation Video**
+<iframe width="1152" height="648" style="margin: auto; display: block;"
+src="https://www.youtube.com/embed/jEza9IKsANE">
+</iframe>
+
+## **Architecture**
 <center><img src="figures/train_stage.jpg" width="1152"></center>
 
 ## **Application 1:** Anime Style Transfer.
@@ -43,6 +48,9 @@ Disentanglement of the lighting (*known factor*) and the remaining content
 (unknown factor) in portrait images,
 and its application for portrait relighting.
 <center><img src="figures/app_portrait_relighting.jpg" width="1152" ></center>
+<iframe width="1152" height="648" style="margin: auto; display: block;"
+src="https://www.youtube.com/embed/A0ymux6aciw">
+</iframe>
 
 ## **Application 3:** Landmark-Based Face Reenactment
 Disentanglement of the identity (*known factor*), the pose (*known factor*) 
@@ -57,6 +65,9 @@ Disentanglement of the identity (*known factor*), the view (*known factor*)
 and the motion (*unknown factor*) in 2D skeletons,
 and its application in body motion retargeting.
 <center><img src="figures/app_motion_retargeting.jpg" width="1152" ></center>
+<iframe width="1152" height="648" style="margin: auto; display: block;"
+src="https://www.youtube.com/embed/I4W6Fm8M1dg">
+</iframe>
 
 ## **BibTeX**
 <div style="background-color:rgba(0, 0, 0, 0.0470588); text-align:center; vertical-align: middle; padding:30px 60px;">
