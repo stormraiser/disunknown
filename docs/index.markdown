@@ -47,7 +47,6 @@ and its application in anime style transfer.
 Disentanglement of the lighting (*known factor*) and the remaining content 
 (unknown factor) in portrait images,
 and its application for portrait relighting.
-<center><img src="figures/app_portrait_relighting.jpg" width="1152" ></center>
 <iframe width="1152" height="648" style="margin: auto; display: block;"
 src="https://www.youtube.com/embed/A0ymux6aciw">
 </iframe>
@@ -64,19 +63,17 @@ src="https://www.youtube.com/embed/BN6LLJpw-v0">
 Disentanglement of the identity (*known factor*), the view (*known factor*) 
 and the motion (*unknown factor*) in 2D skeletons,
 and its application in body motion retargeting.
-<center><img src="figures/app_motion_retargeting.jpg" width="1152" ></center>
 <iframe width="1152" height="648" style="margin: auto; display: block;"
 src="https://www.youtube.com/embed/FIUzmOE2_2w">
 </iframe>
 
 ## **BibTeX**
-<div style="background-color:rgba(0, 0, 0, 0.0470588); text-align:center; vertical-align: middle; padding:30px 60px;">
-<p>@article{xiang2021disunknown,</p>
-<p>title = {DisUnknown: Distilling Unknown Factors for Disentanglement Learning},</p>
-<p>author = {Xiang, Sitao and Gu, Yuming and Xiang, Pengda and Chai, Menglei and Li, 
-Hao and Zhao, Yajie and He, Mingming},</p>
-<p>journal = {arXiv preprint arXiv:2109.08090},</p>
-<p>year = {2021}</p>
-<p>}</p>
-</div>
-
+```
+@inproceedings{xiang2021disunknown,
+  title={DisUnknown: Distilling Unknown Factors for Disentanglement Learning},
+  author={Xiang, Sitao and Gu, Yuming and Xiang, Pengda and Chai, Menglei and Li, Hao and Zhao, Yajie and He, Mingming},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={14810--14819},
+  year={2021}
+}
+```

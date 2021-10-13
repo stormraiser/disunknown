@@ -1,5 +1,7 @@
 # DisUnknown: Distilling Unknown Factors for Disentanglement Learning
 
+See introduction on our [project page](https://stormraiser.github.io/disunknown/)
+
 ## Requirements
 
 - PyTorch >= 1.8.0
@@ -81,3 +83,14 @@ Finally add it to the dictionary of recognized datasets in `data/__init__.py`.
 Default configuration should also be created as `default_config/datasets/<dataset_name>.yaml`. It should at a minimum contain `image_size`, `image_channels` and `factors`. `factors` has the same syntax as `labeled_factors` as explained in the example training configuration. It should contain a complete list of all factors. In particular, if the dataset does not include a complete set of labels, there should be a factor called `unknown` which will become the default unknown factor if `labeled_factors` is not set in the training configuration.
 
 Any additional settings in the default configuration will override global defaults in `default_config/default_config.yaml`.
+
+## Citing This Work (BibTeX)
+```
+@inproceedings{xiang2021disunknown,
+  title={DisUnknown: Distilling Unknown Factors for Disentanglement Learning},
+  author={Xiang, Sitao and Gu, Yuming and Xiang, Pengda and Chai, Menglei and Li, Hao and Zhao, Yajie and He, Mingming},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={14810--14819},
+  year={2021}
+}
+```
